@@ -36,6 +36,7 @@ class App extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let url = 'https://source.unsplash.com/' + this.state.imageWidth + 'x' + this.state.imageHeight + '/?' + this.state.tags
+    console.log(url);
     window.open(url, "_blank")
   }
 
@@ -49,7 +50,7 @@ class App extends Component {
     // console.log(this.state)
     return (
       <div className="App">
-        <form noValidate autoComplete="off">
+        <form noValidate autoComplete="off" className="MainForm">
           <TextField
             id="standard-controlled"
             value={this.state.imageWidth}
