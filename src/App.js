@@ -67,6 +67,19 @@ class App extends Component {
         width = 2880
         height = 1880
         break;
+      case "iphone-x":
+        width = 1125
+        height = 2436
+        break;
+      case "iphone-xs-max":
+        width = 1242
+        height = 2688
+        break;
+      case "galaxy-s9":
+        width = 1440
+        height = 2960
+        break;
+
       default:
         width = 3840
         height = 2080
@@ -107,6 +120,10 @@ class App extends Component {
             <MenuItem value={'4k-uwide1440'}>4k Ultra Wide 1440</MenuItem>
             <MenuItem value={'4k-uwide1600'}>4k Ultra Wide 1600</MenuItem>
             <MenuItem value={'mbp16-18'}>Macbook Pro 2016-2018</MenuItem>
+            <MenuItem value={'iphone-x'}>iPhone X/XS</MenuItem>
+            <MenuItem value={'iphone-xs-max'}>iPhone XS Max</MenuItem>
+            <MenuItem value={'galaxy-s9'}>Galaxy S9 and S9+</MenuItem>
+
           </Select>
 
           <TextField
