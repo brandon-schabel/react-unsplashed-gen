@@ -12,6 +12,8 @@ class App extends Component {
     this.state = {
       imageWidth: '3840',
       imageHeight: '2160',
+      inputWidth: '',
+      inputHeight: '',
       tags: 'nature',
       selectorValue: '',
       
@@ -26,23 +28,9 @@ class App extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    let url = 'https://source.unsplash.com/' + this.state.imageWidth + 'x' + this.state.imageHeight + '/?' + this.state.tags
-    console.log(url);
-    window.open(url, "_blank")
-  }
-
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-
-  handleSelectChange = event => {
     let height = 0;
     let width = 0;
-    console.log(event.target.value);
-    this.setState({ selectorValue: event.target.value });
-    switch(event.target.value) {
+    switch(this.state.selectorValue) {
       case "1080":
         width = 1920
         height = 1080
@@ -54,6 +42,10 @@ class App extends Component {
       case "4k":
         width = 3840
         height = 2080
+        break;
+      case "8k":
+        width = 7680
+        height = 4320
         break;
       case "4k-uwide1440":
         width = 3840
@@ -85,10 +77,40 @@ class App extends Component {
         height = 2080
     }
 
+    if(this.state.inputHeight) {
+      height = this.state.inputHeight
+    }
+    if(this.state.inputWidth) {
+      width = this.state.inputWidth
+    }
+
+    /*
     this.setState({
       imageWidth: width,
-      imageHeight: height
-    })
+      imageHeight: height,
+    }) */
+
+    console.log("submit", width, height);
+
+    let url = 'https://source.unsplash.com/' + width + 'x' + height + '/?' + this.state.tags
+    console.log(url);
+    window.open(url, "_blank")
+  }
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+
+    console.log(this.state)
+  };
+
+  handleSelectChange = event => {
+    this.setState({ selectorValue: event.target.value,
+                    inputHeight: '',
+                    inputWidth: ''
+     });
+    
   }
 
   render() {
@@ -96,19 +118,19 @@ class App extends Component {
       <div className="App">
         <form noValidate autoComplete="off" className="MainForm">
           <TextField
+            value = {this.state.inputWidth}
             id="standard-controlled"
-            value={this.state.imageWidth}
             label="Width"
             margin="normal"
-            onChange={this.handleChange('width')}
+            onChange={this.handleChange('inputWidth')}
           />
 
           <TextField
+          value ={this.state.inputHeight}
             id="standard-controlled"
-            value={this.state.imageHeight}
             label="Height"
             margin="normal"
-            onChange={this.handleChange('height')}
+            onChange={this.handleChange('inputHeight')}
           />
 
           <Select value={this.state.selectorValue}
@@ -117,13 +139,13 @@ class App extends Component {
             <MenuItem value={'1080'}>1080p</MenuItem>
             <MenuItem value={'1440'}>1440p</MenuItem>
             <MenuItem value={'4k'}>4k</MenuItem>
+            <MenuItem value={'8k'}>8k</MenuItem>
             <MenuItem value={'4k-uwide1440'}>4k Ultra Wide 1440</MenuItem>
             <MenuItem value={'4k-uwide1600'}>4k Ultra Wide 1600</MenuItem>
             <MenuItem value={'mbp16-18'}>Macbook Pro 2016-2018</MenuItem>
             <MenuItem value={'iphone-x'}>iPhone X/XS</MenuItem>
             <MenuItem value={'iphone-xs-max'}>iPhone XS Max</MenuItem>
             <MenuItem value={'galaxy-s9'}>Galaxy S9 and S9+</MenuItem>
-
           </Select>
 
           <TextField
@@ -137,6 +159,7 @@ class App extends Component {
           <Button onClick={this.handleSubmit} variant="contained" color="primary">
             Generate image
           </Button>
+
         </form>
       </div>
     );
