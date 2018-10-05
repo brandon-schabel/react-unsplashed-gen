@@ -55,9 +55,13 @@ class App extends Component {
         width = 3840
         height = 2080
         break;
-      case "4k-uwide":
+      case "4k-uwide1440":
         width = 3840
         height = 1440
+        break;
+      case "4k-uwide1600":
+        width = 3840
+        height = 1600
         break;
       case "mbp16-18":
         width = 2880
@@ -100,7 +104,8 @@ class App extends Component {
             <MenuItem value={'1080'}>1080p</MenuItem>
             <MenuItem value={'1440'}>1440p</MenuItem>
             <MenuItem value={'4k'}>4k</MenuItem>
-            <MenuItem value={'4k-uwide'}>4k Ultra Wide</MenuItem>
+            <MenuItem value={'4k-uwide1440'}>4k Ultra Wide 1440</MenuItem>
+            <MenuItem value={'4k-uwide1600'}>4k Ultra Wide 1600</MenuItem>
             <MenuItem value={'mbp16-18'}>Macbook Pro 2016-2018</MenuItem>
           </Select>
 
