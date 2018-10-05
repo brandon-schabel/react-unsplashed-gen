@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 import './App.css';
 
 class App extends Component {
@@ -11,29 +13,18 @@ class App extends Component {
       imageWidth: '3840',
       imageHeight: '2160',
       tags: 'nature',
+      selectorValue: '',
+      
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.generateUrl = this.generateUrl.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  generateUrl(imageWidth, imageHeight, tags) {
-    // console.log(width, height, tags)
-    //const splitTags = tags.split(" ");
-    // console.log('split', splitTags)
+  generateUrl = (imageWidth, imageHeight, tags) => {
     let generatedUrl = 'https://source.unsplash.com/' + imageWidth + 'x' + imageHeight + '/?' + tags
 
-    /*
-    for(let i = 0; i < splitTags.length; i++) {
-      generatedUrl.concat('tag'+',')
-    }
-    */
-
-    console.log(generatedUrl);
     return generatedUrl;
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     let url = 'https://source.unsplash.com/' + this.state.imageWidth + 'x' + this.state.imageHeight + '/?' + this.state.tags
     console.log(url);
@@ -46,8 +37,44 @@ class App extends Component {
     });
   };
 
+  handleSelectChange = event => {
+    let height = 0;
+    let width = 0;
+    console.log(event.target.value);
+    this.setState({ selectorValue: event.target.value });
+    switch(event.target.value) {
+      case "1080":
+        width = 1920
+        height = 1080
+        break;
+      case "1440":
+        width = 2560
+        height = 1440
+        break;
+      case "4k":
+        width = 3840
+        height = 2080
+        break;
+      case "4k-uwide":
+        width = 3840
+        height = 1440
+        break;
+      case "mbp16-18":
+        width = 2880
+        height = 1880
+        break;
+      default:
+        width = 3840
+        height = 2080
+    }
+
+    this.setState({
+      imageWidth: width,
+      imageHeight: height
+    })
+  }
+
   render() {
-    // console.log(this.state)
     return (
       <div className="App">
         <form noValidate autoComplete="off" className="MainForm">
@@ -66,6 +93,16 @@ class App extends Component {
             margin="normal"
             onChange={this.handleChange('height')}
           />
+
+          <Select value={this.state.selectorValue}
+                  onChange={this.handleSelectChange}
+            >
+            <MenuItem value={'1080'}>1080p</MenuItem>
+            <MenuItem value={'1440'}>1440p</MenuItem>
+            <MenuItem value={'4k'}>4k</MenuItem>
+            <MenuItem value={'4k-uwide'}>4k Ultra Wide</MenuItem>
+            <MenuItem value={'mbp16-18'}>Macbook Pro 2016-2018</MenuItem>
+          </Select>
 
           <TextField
             id="standard-controlled"
